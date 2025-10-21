@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Imersa Web HTML Generator</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- PapaParse untuk CSV -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/papaparse/5.3.2/papaparse.min.js"></script>
+  
+  <!-- SheetJS untuk XLSX -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  
+  <!-- JSZip untuk membuat ZIP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+  
+  <!-- FileSaver untuk download file -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+
+<div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+  <h1 class="text-3xl font-bold mb-6 text-center text-indigo-600">Imersa Web HTML Generator</h1>
+
+  <!-- Template HTML -->
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold mb-2">1. Template HTML</h2>
+    <textarea id="templateInput" class="w-full border p-3 rounded-md" placeholder="Paste template HTML di sini..." rows="8"></textarea>
+  </div>
+
+  <!-- Upload Data -->
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold mb-2">2. Upload Data Variabel (CSV/XLSX)</h2>
+    <input type="file" id="dataFileInput" accept=".csv, .xlsx" class="border p-2 rounded-md" />
+  </div>
+
+  <!-- Generate -->
+  <div class="mb-6">
+    <button onclick="generateHTML()" class="bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700">
+      Generate HTML
+    </button>
+  </div>
+
+  <!-- Hasil -->
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold mb-2">3. Hasil Generate</h2>
+    <div id="fileList" class="space-y-2"></div>
+    <div class="mt-4">
+      <button onclick="downloadAll()" class="bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700">
+        Download ZIP Semua
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+let generatedFiles = {};
+
+function replaceVariables(template, data) {
+  let result = template;
+  const variableRegex = /_([A-Z0-9_]+)_/g;  // cari semua _VARIABEL_
+
+  result = result.replace(variableRegex, (match, p1) => {
+    const replacement = data[p1] !== undefined ? data[p1] : match;
+    return replacement;
+  });
+
+  return result;
+}
+
+
+function generateHTML() {
+  const template = document.getElementById('templateInput').value;
+  const fileInput = document.getElementById('dataFileInput').files[0];
+
+  if (!template || !fileInput) {
+    alert('Mohon upload template dan file data (CSV/XLSX)!');
+    return;
+  }
+
+  const reader = new FileReader();
+  
+  reader.onload = function(e) {
+    const filename = fileInput.name;
+    let dataRows = [];
+
+    if (filename.endsWith('.csv')) {
+      const csvData = Papa.parse(e.target.result, { header: true, skipEmptyLines: true });
+      dataRows = csvData.data;
+    } else if (filename.endsWith('.xlsx')) {
+      const workbook = XLSX.read(e.target.result, { type: 'binary' });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      dataRows = XLSX.utils.sheet_to_json(worksheet);
+    } else {
+      alert('Format file tidak didukung. Hanya CSV atau XLSX.');
+      return;
+    }
+
+    // Mulai generate
+    const fileList = document.getElementById('fileList');
+    fileList.innerHTML = '';
+    generatedFiles = {}; // reset
+
+    dataRows.forEach((row, index) => {
+      const htmlContent = replaceVariables(template, row);
+      const rawTitle = row.JUDUL || `file${index + 1}`;
+      const safeTitle = rawTitle.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+      const filename = `${safeTitle}.html`;
+
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      generatedFiles[filename] = blob;
+
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      link.textContent = `Download ${filename}`;
+      link.className = "block text-blue-600 hover:underline";
+      fileList.appendChild(link);
+    });
+  };
+
+  if (fileInput.name.endsWith('.xlsx')) {
+    reader.readAsBinaryString(fileInput);
+  } else {
+    reader.readAsText(fileInput);
+  }
+}
+
+function downloadAll() {
+  const zip = new JSZip();
+  for (const filename in generatedFiles) {
+    zip.file(filename, generatedFiles[filename]);
+  }
+  zip.generateAsync({ type: 'blob' })
+    .then(function(content) {
+      saveAs(content, 'html-files.zip');
+    });
+}
+</script>
+
+</body>
+</html>
