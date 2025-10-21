@@ -1,41 +1,41 @@
-# Web Scheduler - HTML Generator Tool
+# Web Scheduler - Alat Pembuat HTML
 
-A powerful web-based HTML generator that creates multiple HTML pages from templates and data files. Perfect for batch generating landing pages, schedules, or any HTML content with variable data.
+Sebuah pembuat HTML berbasis web yang kuat untuk membuat beberapa halaman HTML dari template dan file data. Sempurna untuk membuat landing page, jadwal, atau konten HTML apa pun dengan data variabel secara batch.
 
-## Overview
+## Ringkasan
 
-**web_generator.html** is the main tool that allows you to:
-- Create multiple HTML files from a single template
-- Use CSV or XLSX files as data sources
-- Replace template variables with actual data
-- Download generated files individually or as a ZIP archive
+**web_generator.html** adalah alat utama yang memungkinkan Anda untuk:
+- Membuat beberapa file HTML dari satu template
+- Menggunakan file CSV atau XLSX sebagai sumber data
+- Mengganti variabel template dengan data sebenarnya
+- Mengunduh file yang dihasilkan secara individual atau sebagai arsip ZIP
 
-## Features
+## Fitur
 
-- 🎨 **Template-based generation**: Use HTML templates with variable placeholders
-- 📊 **Multiple data formats**: Supports both CSV and XLSX (Excel) files
-- 🔄 **Batch processing**: Generate hundreds of HTML files in seconds
-- 💾 **Flexible download options**: Download individual files or all files as a ZIP
-- 🌐 **Browser-based**: No installation required, runs entirely in your browser
-- 🚀 **Client-side processing**: All processing happens locally, your data stays private
+- 🎨 **Pembuatan berbasis template**: Gunakan template HTML dengan placeholder variabel
+- 📊 **Berbagai format data**: Mendukung file CSV dan XLSX (Excel)
+- 🔄 **Pemrosesan batch**: Hasilkan ratusan file HTML dalam hitungan detik
+- 💾 **Opsi unduhan fleksibel**: Unduh file individual atau semua file sebagai ZIP
+- 🌐 **Berbasis browser**: Tidak perlu instalasi, berjalan sepenuhnya di browser Anda
+- 🚀 **Pemrosesan sisi klien**: Semua pemrosesan terjadi secara lokal, data Anda tetap privat
 
-## Getting Started
+## Memulai
 
-### Quick Start
+### Panduan Cepat
 
-1. Open `web_generator.html` in your web browser
-2. Paste your HTML template in the template area
-3. Upload your data file (CSV or XLSX)
-4. Click "Generate HTML"
-5. Download individual files or all files as a ZIP
+1. Buka `web_generator.html` di browser web Anda
+2. Tempel template HTML Anda di area template
+3. Unggah file data Anda (CSV atau XLSX)
+4. Klik "Generate HTML"
+5. Unduh file individual atau semua file sebagai ZIP
 
-### Template Syntax
+### Sintaks Template
 
-Use the following format for variables in your template: `_VARIABLE_NAME_`
+Gunakan format berikut untuk variabel dalam template Anda: `_NAMA_VARIABEL_`
 
-The generator will replace these placeholders with corresponding column values from your data file.
+Generator akan mengganti placeholder ini dengan nilai kolom yang sesuai dari file data Anda.
 
-**Example:**
+**Contoh:**
 ```html
 <!DOCTYPE html>
 <html>
@@ -50,89 +50,89 @@ The generator will replace these placeholders with corresponding column values f
 </html>
 ```
 
-### Data File Format
+### Format File Data
 
-Your CSV or XLSX file should have:
-- **Header row**: Column names matching your template variables (without underscores)
-- **Data rows**: One row for each HTML file you want to generate
-- **JUDUL column** (optional): Used as the filename (will be sanitized)
+File CSV atau XLSX Anda harus memiliki:
+- **Baris header**: Nama kolom yang sesuai dengan variabel template Anda (tanpa garis bawah)
+- **Baris data**: Satu baris untuk setiap file HTML yang ingin Anda hasilkan
+- **Kolom JUDUL** (opsional): Digunakan sebagai nama file (akan disanitasi)
 
-**Example CSV:**
+**Contoh CSV:**
 ```csv
 JUDUL,COMPANY_NAME,PAGE_TITLE,HERO_HEADLINE,HERO_SUBHEAD,CTA_LINK,CTA_TEXT
 product-1,Acme Corp,Product One,Welcome to Product One,The best solution,https://example.com/buy,Buy Now
 product-2,Acme Corp,Product Two,Welcome to Product Two,Another great product,https://example.com/buy2,Get Started
 ```
 
-## Example Files
+## File Contoh
 
-The repository includes example files to help you get started:
+Repositori ini menyertakan file contoh untuk membantu Anda memulai:
 
-- **`template.html`**: A sample HTML template with various variable placeholders
-- **`_JUDUL_.html`**: An example of generated output
-- **`_JUDUL__files/`**: Supporting assets for the example output
+- **`template.html`**: Template HTML sampel dengan berbagai placeholder variabel
+- **`_JUDUL_.html`**: Contoh output yang dihasilkan
+- **`_JUDUL__files/`**: Aset pendukung untuk contoh output
 
-## How It Works
+## Cara Kerja
 
-1. **Template Parsing**: The tool scans your template for variables in the format `_VARIABLE_NAME_`
-2. **Data Loading**: Reads your CSV or XLSX file using PapaParse and SheetJS libraries
-3. **Variable Replacement**: For each row in your data file:
-   - Creates a copy of the template
-   - Replaces all variables with corresponding values from that row
-   - Generates a unique filename (based on JUDUL column or row index)
-4. **File Generation**: Creates downloadable HTML files for each row
-5. **ZIP Archive**: Optionally packages all files into a single ZIP for easy download
+1. **Parsing Template**: Alat memindai template Anda untuk variabel dalam format `_NAMA_VARIABEL_`
+2. **Pemuatan Data**: Membaca file CSV atau XLSX Anda menggunakan library PapaParse dan SheetJS
+3. **Penggantian Variabel**: Untuk setiap baris dalam file data Anda:
+   - Membuat salinan dari template
+   - Mengganti semua variabel dengan nilai yang sesuai dari baris tersebut
+   - Menghasilkan nama file unik (berdasarkan kolom JUDUL atau indeks baris)
+4. **Pembuatan File**: Membuat file HTML yang dapat diunduh untuk setiap baris
+5. **Arsip ZIP**: Secara opsional mengemas semua file ke dalam satu ZIP untuk kemudahan unduhan
 
-## Technical Details
+## Detail Teknis
 
-### Dependencies (loaded via CDN)
+### Dependensi (dimuat melalui CDN)
 
-- **Tailwind CSS**: For the UI styling
-- **PapaParse**: CSV parsing library
-- **SheetJS (xlsx)**: Excel file parsing
-- **JSZip**: ZIP file creation
-- **FileSaver.js**: File download functionality
+- **Tailwind CSS**: Untuk styling UI
+- **PapaParse**: Library parsing CSV
+- **SheetJS (xlsx)**: Parsing file Excel
+- **JSZip**: Pembuatan file ZIP
+- **FileSaver.js**: Fungsi unduh file
 
-### Browser Compatibility
+### Kompatibilitas Browser
 
-Works in all modern browsers that support:
+Bekerja di semua browser modern yang mendukung:
 - FileReader API
 - Blob API
 - ES6 JavaScript
 
-### Privacy & Security
+### Privasi & Keamanan
 
-- All processing is done client-side in your browser
-- No data is uploaded to any server
-- Your templates and data remain completely private
+- Semua pemrosesan dilakukan di sisi klien di browser Anda
+- Tidak ada data yang diunggah ke server mana pun
+- Template dan data Anda tetap sepenuhnya privat
 
-## Use Cases
+## Kasus Penggunaan
 
-- 📄 **Landing Pages**: Generate multiple landing pages for different products or campaigns
-- 🎫 **Event Schedules**: Create individual schedule pages for different events or dates
-- 🏢 **Directory Pages**: Build directory listings with individual profile pages
-- 📧 **Email Templates**: Generate personalized HTML email content
-- 🌍 **Localized Content**: Create the same page in multiple languages
+- 📄 **Landing Pages**: Hasilkan beberapa landing page untuk berbagai produk atau kampanye
+- 🎫 **Jadwal Acara**: Buat halaman jadwal individual untuk berbagai acara atau tanggal
+- 🏢 **Halaman Direktori**: Buat daftar direktori dengan halaman profil individual
+- 📧 **Template Email**: Hasilkan konten email HTML yang dipersonalisasi
+- 🌍 **Konten Terlokalisasi**: Buat halaman yang sama dalam berbagai bahasa
 
-## Tips & Best practices
+## Tips & Praktik Terbaik
 
-1. **Test with small datasets first**: Try with 2-3 rows before processing large files
-2. **Use descriptive column names**: Match them to your template variables exactly (case-sensitive)
-3. **Include a JUDUL column**: For meaningful filenames instead of generic "file1.html"
-4. **Sanitize your data**: Ensure URLs and special characters are properly formatted
-5. **Keep templates organized**: Comment your variable placeholders for easier maintenance
+1. **Uji dengan dataset kecil terlebih dahulu**: Coba dengan 2-3 baris sebelum memproses file besar
+2. **Gunakan nama kolom yang deskriptif**: Sesuaikan dengan variabel template Anda dengan tepat (case-sensitive)
+3. **Sertakan kolom JUDUL**: Untuk nama file yang bermakna daripada generik "file1.html"
+4. **Sanitasi data Anda**: Pastikan URL dan karakter khusus diformat dengan benar
+5. **Jaga template tetap terorganisir**: Beri komentar pada placeholder variabel Anda untuk kemudahan pemeliharaan
 
-## Troubleshooting
+## Pemecahan Masalah
 
-**Variables not being replaced?**
-- Check that column names in your data file match the variable names in the template (without underscores)
-- Ensure variables in the template use the format `_VARIABLE_NAME_` with underscores on both sides
+**Variabel tidak diganti?**
+- Periksa bahwa nama kolom dalam file data Anda sesuai dengan nama variabel dalam template (tanpa garis bawah)
+- Pastikan variabel dalam template menggunakan format `_NAMA_VARIABEL_` dengan garis bawah di kedua sisi
 
-**Files not generating?**
-- Verify your data file is valid CSV or XLSX format
-- Check that the file has a header row with column names
-- Ensure your template is valid HTML
+**File tidak dihasilkan?**
+- Verifikasi bahwa file data Anda adalah format CSV atau XLSX yang valid
+- Periksa bahwa file memiliki baris header dengan nama kolom
+- Pastikan template Anda adalah HTML yang valid
 
-**Download not working?**
-- Make sure you've generated files first by clicking "Generate HTML"
-- Check your browser's pop-up blocker settings
+**Unduhan tidak berfungsi?**
+- Pastikan Anda telah menghasilkan file terlebih dahulu dengan mengklik "Generate HTML"
+- Periksa pengaturan pemblokir pop-up browser Anda
