@@ -136,11 +136,3 @@ Works in all modern browsers that support:
 **Download not working?**
 - Make sure you've generated files first by clicking "Generate HTML"
 - Check your browser's pop-up blocker settings
-
-## License
-
-This project is open source and available for use in your projects.
-
-## Contributing
-
-Feel free to submit issues or pull requests to improve this tool!
